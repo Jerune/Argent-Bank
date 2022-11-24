@@ -1,14 +1,15 @@
+// @ts-nocheck
 import { USER_DATA } from '../mocks/userData'
 
-export function verifyIfDataExistsInDatabase(userData) {
-  const usernameExistsInDatabase = USER_DATA.some((user) => {
-    user.username.includes(userData.username)
-  })
-  if (usernameExistsInDatabase) {
-    const isPasswordCorrect = USER_DATA.some((user) => {
-      user.password.includes(userData.password)
-    })
-    if (isPasswordCorrect) {
+export function verifyIfDataExistsInDatabase(formData) {
+  const currentUserLogin = USER_DATA.filter(
+    (user) => user.username == formData.username,
+  )[0]
+  console.log(formData)
+  console.log(currentUserLogin)
+
+  if (currentUserLogin !== undefined) {
+    if (currentUserLogin.password === formData.password) {
       return {
         success: true,
       }
@@ -22,7 +23,7 @@ export function verifyIfDataExistsInDatabase(userData) {
   } else {
     return {
       success: false,
-      errorLocation: 'userNameInput',
+      errorLocation: 'usernameInput',
       error: 'Unknown username',
     }
   }

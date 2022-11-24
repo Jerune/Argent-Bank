@@ -27,13 +27,15 @@ export default function SignIn() {
   async function handleSubmit(event) {
     event.preventDefault()
     const isDataCorrect = await verifyIfDataExistsInDatabase(formData)
+    console.log(isDataCorrect)
     if (isDataCorrect.success) {
       await dispatch(logIn(formData))
-      navigate('profile')
+      navigate('/profile')
     } else {
-      const inputFieldWithError = isDataCorrect.errorLocation
-      inputFieldWithError.current.className.add('error')
-      inputFieldWithError.current.placeholder = isDataCorrect.error
+      // const inputFieldWithError = isDataCorrect.errorLocation
+      // usernameInput.current.className.add('error')
+      // usernameInput.current.value = ''
+      // usernameInput.current.placeholder = isDataCorrect.error
     }
   }
 
@@ -42,7 +44,7 @@ export default function SignIn() {
       <section className="sign-in-content">
         <i className="fa fa-user-circle sign-in-icon"></i>
         <h1>Sign In</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
             <label htmlFor="username">Username</label>
             <input
@@ -50,6 +52,7 @@ export default function SignIn() {
               id="username"
               name="username"
               ref={usernameInput}
+              placeholder=""
               onChange={handleChange}
               value={formData.username}
             />
@@ -61,6 +64,7 @@ export default function SignIn() {
               id="password"
               name="password"
               ref={passwordInput}
+              placeholder=""
               onChange={handleChange}
               value={formData.password}
             />
@@ -69,9 +73,7 @@ export default function SignIn() {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          <button className="sign-in-button" onSubmit={handleSubmit}>
-            Sign In
-          </button>
+          <button className="sign-in-button">Sign In</button>
         </form>
       </section>
     </main>
