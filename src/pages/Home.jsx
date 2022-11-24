@@ -1,4 +1,8 @@
+// @ts-nocheck
 import React from 'react'
+import chatIcon from '../img/icon-chat.png'
+import moneyIcon from '../img/icon-money.png'
+import securityIcon from '../img/icon-security.png'
 
 export default function Home() {
   return (
@@ -15,11 +19,7 @@ export default function Home() {
       <section className="features">
         <h2 className="sr-only">Features</h2>
         <div className="feature-item">
-          <img
-            src="../img/icon-chat.png"
-            alt="Chat Icon"
-            className="feature-icon"
-          />
+          <img src={chatIcon} alt="Chat Icon" className="feature-icon" />
           <h3 className="feature-item-title">You are our #1 priority</h3>
           <p>
             Need to talk to a representative? You can get in touch through our
@@ -27,11 +27,7 @@ export default function Home() {
           </p>
         </div>
         <div className="feature-item">
-          <img
-            src="./img/icon-money.png"
-            alt="Chat Icon"
-            className="feature-icon"
-          />
+          <img src={moneyIcon} alt="Money Icon" className="feature-icon" />
           <h3 className="feature-item-title">
             More savings means higher rates
           </h3>
@@ -41,8 +37,8 @@ export default function Home() {
         </div>
         <div className="feature-item">
           <img
-            src="./img/icon-security.png"
-            alt="Chat Icon"
+            src={securityIcon}
+            alt="Security Icon"
             className="feature-icon"
           />
           <h3 className="feature-item-title">Security you can trust</h3>
