@@ -7,9 +7,11 @@ const activeUser = {
 
 function reducer(state = activeUser, action) {
   switch (action.type) {
-    case 'CHANGE_COUNT':
+    case 'LOGIN':
       return {}
-    case 'ADD_FAVORITE_THING':
+    case 'LOGOUT':
+      return {}
+    case 'CHANGE_USER_DATA':
       return {}
     default:
       return state
