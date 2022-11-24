@@ -206,6 +206,14 @@ body {
   font-size: 1.2rem;
 }
 
+.input-wrapper input.error {
+  border: 2px red;
+}
+
+.input-wrapper input.error::placeholder {
+  color: red;
+}
+
 .footer {
   display: flex;
   justify-content: center;
