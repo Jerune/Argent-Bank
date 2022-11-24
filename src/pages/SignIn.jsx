@@ -15,7 +15,18 @@ export default function SignIn() {
     password: '',
   })
 
+  function resetErrorState() {
+    if (usernameInput.current.classList.contains('error')) {
+      usernameInput.current.classList.remove('error')
+      passwordInput.current.placeholder = ''
+    } else if (passwordInput.current.classList.contains('error')) {
+      passwordInput.current.classList.remove('error')
+      passwordInput.current.placeholder = ''
+    }
+  }
+
   function handleChange(event) {
+    resetErrorState()
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
@@ -27,15 +38,26 @@ export default function SignIn() {
   async function handleSubmit(event) {
     event.preventDefault()
     const isDataCorrect = await verifyIfDataExistsInDatabase(formData)
-    console.log(isDataCorrect)
     if (isDataCorrect.success) {
       await dispatch(logIn(formData))
       navigate('/profile')
     } else {
-      // const inputFieldWithError = isDataCorrect.errorLocation
-      // usernameInput.current.className.add('error')
-      // usernameInput.current.value = ''
-      // usernameInput.current.placeholder = isDataCorrect.error
+      switch (isDataCorrect.errorLocation) {
+        case 'usernameInput':
+          usernameInput.current.classList.add('error')
+          usernameInput.current.placeholder = isDataCorrect.error
+          break
+        case 'passwordInput':
+          passwordInput.current.classList.add('error')
+          passwordInput.current.placeholder = isDataCorrect.error
+          break
+        default:
+          null
+      }
+      setFormData({
+        username: '',
+        password: '',
+      })
     }
   }
 

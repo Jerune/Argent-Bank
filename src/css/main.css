@@ -207,11 +207,12 @@ body {
 }
 
 .input-wrapper input.error {
-  border: 2px red;
+  border: 2px darkred solid;
 }
 
 .input-wrapper input.error::placeholder {
-  color: red;
+  color: darkred;
+  font-size: 0.8rem;
 }
 
 .footer {

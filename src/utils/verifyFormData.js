@@ -5,8 +5,6 @@ export function verifyIfDataExistsInDatabase(formData) {
   const currentUserLogin = USER_DATA.filter(
     (user) => user.username == formData.username,
   )[0]
-  console.log(formData)
-  console.log(currentUserLogin)
 
   if (currentUserLogin !== undefined) {
     if (currentUserLogin.password === formData.password) {
