@@ -16,7 +16,7 @@ export default function Home() {
         <h2 className="sr-only">Features</h2>
         <div className="feature-item">
           <img
-            src="./img/icon-chat.png"
+            src="../img/icon-chat.png"
             alt="Chat Icon"
             className="feature-icon"
           />
