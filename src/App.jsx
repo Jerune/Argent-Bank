@@ -12,8 +12,8 @@ function App() {
       <HeaderNav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="sign-in" element={<SignIn />} />
-        <Route path="account" element={<UserAccount />} />
+        <Route path="login" element={<SignIn />} />
+        <Route path="profile" element={<UserAccount />} />
       </Routes>
       <Footer />
     </>
