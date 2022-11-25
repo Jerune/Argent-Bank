@@ -198,6 +198,22 @@ body {
   margin-bottom: 1rem;
 }
 
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-inputs {
+  flex-direction: row;
+  gap: 15px;
+}
+
+.profile-inputs button {
+  width: 75px;
+}
+
 .input-wrapper label {
   font-weight: bold;
 }

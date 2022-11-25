@@ -1,13 +1,17 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { changeUserData } from '../redux/reducer'
 
 export default function Profile() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const firstName = useSelector((state) => state.firstName)
   const lastName = useSelector((state) => state.lastName)
   const userIsLoggedIn = useSelector((state) => state.isloggedIn)
-  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({ firstName, lastName })
   const [isEditingDetails, setIsEditingDetails] = useState(false)
 
@@ -28,10 +32,13 @@ export default function Profile() {
     setIsEditingDetails((prevState) => {
       return !prevState
     })
+    setFormData({ firstName, lastName })
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
+    await dispatch(changeUserData(formData))
+    toggleIsEditingDetails()
   }
 
   return (
@@ -40,15 +47,15 @@ export default function Profile() {
         <h1>
           Welcome back
           <br />
-          {firstName} {lastName}!
+          {!isEditingDetails && `${firstName} ${lastName}!`}
         </h1>
         {!isEditingDetails ? (
           <button className="profile-button" onClick={toggleIsEditingDetails}>
             Edit Name
           </button>
         ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="input-wrapper">
+          <form className="profile-form" onSubmit={handleSubmit}>
+            <div className="input-wrapper profile-inputs">
               <input
                 type="text"
                 placeholder={firstName}
@@ -66,7 +73,7 @@ export default function Profile() {
                 onChange={handleChange}
               />
             </div>
-            <div>
+            <div className="input-wrapper profile-inputs">
               <button className="profile-button" type="submit">
                 Save
               </button>

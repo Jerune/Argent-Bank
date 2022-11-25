@@ -11,10 +11,11 @@ export const SignIn = ({ email, password }) => ({
 
 export const SignOut = () => ({ type: 'SIGN_OUT' })
 
-export const changeUserData = (data) => {
+export const changeUserData = ({ firstName, lastName }) => {
   return {
     type: 'CHANGE_USER_DATA',
-    payload: data,
+    firstName: firstName,
+    lastName: lastName,
   }
 }
 
@@ -45,7 +46,11 @@ function reducer(state = activeUser, action) {
     case 'SIGN_OUT':
       return { ...activeUser }
     case 'CHANGE_USER_DATA':
-      return {}
+      return {
+        ...state,
+        firstName: action.firstName,
+        lastName: action.lastName,
+      }
     default:
       return state
   }
