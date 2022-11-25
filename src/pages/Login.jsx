@@ -1,6 +1,6 @@
 // @ts-nocheck
-import React, { useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { SignIn } from '../redux/reducer'
 import { verifyIfDataExistsInDatabase } from '../utils/verifyFormData'
@@ -10,10 +10,15 @@ export default function Login() {
   const navigate = useNavigate()
   const usernameInput = useRef(null)
   const passwordInput = useRef(null)
+  const userIsLoggedIn = useSelector((state) => state.isloggedIn)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
+
+  useEffect(() => {
+    if (userIsLoggedIn) navigate('/profile')
+  }, [userIsLoggedIn])
 
   function resetErrorState() {
     if (usernameInput.current.classList.contains('error')) {

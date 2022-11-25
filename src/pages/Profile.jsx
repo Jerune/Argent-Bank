@@ -1,10 +1,17 @@
 // @ts-nocheck
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 
 export default function Profile() {
   const firstName = useSelector((state) => state.firstName)
   const lastName = useSelector((state) => state.lastName)
+  const userIsLoggedIn = useSelector((state) => state.isloggedIn)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!userIsLoggedIn) navigate('/login')
+  }, [userIsLoggedIn])
 
   return (
     <main className="main bg-dark">
