@@ -212,7 +212,7 @@ body {
 
 .input-wrapper input.error::placeholder {
   color: darkred;
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 .footer {

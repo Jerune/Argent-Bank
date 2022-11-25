@@ -2,8 +2,11 @@
 
 export const logIn = ({ email, password }) => ({
   type: 'LOGIN',
+  firstName: 'Jack',
+  lastName: 'the Ripper',
   username: email,
   password: password,
+  token: 'token',
 })
 
 export const logOut = () => ({ type: 'LOGOUT' })
@@ -32,9 +35,12 @@ function reducer(state = activeUser, action) {
   switch (action.type) {
     case 'LOGIN':
       return {
-        ...state,
-        firstName: action.username,
-        lastName: action.password,
+        firstName: action.firstName,
+        lastName: action.lastName,
+        email: action.email,
+        password: action.password,
+        token: action.token,
+        isloggedIn: true,
       }
     case 'LOGOUT':
       return {}
