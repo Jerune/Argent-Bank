@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
@@ -8,10 +8,31 @@ export default function Profile() {
   const lastName = useSelector((state) => state.lastName)
   const userIsLoggedIn = useSelector((state) => state.isloggedIn)
   const navigate = useNavigate()
+  const [formData, setFormData] = useState({ firstName, lastName })
+  const [isEditingDetails, setIsEditingDetails] = useState(false)
 
   useEffect(() => {
     if (!userIsLoggedIn) navigate('/login')
   }, [userIsLoggedIn])
+
+  function handleChange(event) {
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [event.target.name]: event.target.value,
+      }
+    })
+  }
+
+  function toggleIsEditingDetails() {
+    setIsEditingDetails((prevState) => {
+      return !prevState
+    })
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault()
+  }
 
   return (
     <main className="main bg-dark">
@@ -21,7 +42,43 @@ export default function Profile() {
           <br />
           {firstName} {lastName}!
         </h1>
-        <button className="edit-button">Edit Name</button>
+        {!isEditingDetails ? (
+          <button className="profile-button" onClick={toggleIsEditingDetails}>
+            Edit Name
+          </button>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="input-wrapper">
+              <input
+                type="text"
+                placeholder={firstName}
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                placeholder={lastName}
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <button className="profile-button" type="submit">
+                Save
+              </button>
+              <button
+                className="profile-button"
+                onClick={toggleIsEditingDetails}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
       </div>
       <h2 className="sr-only">Accounts</h2>
       <section className="account">
