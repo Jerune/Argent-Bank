@@ -2,10 +2,10 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { logIn } from '../redux/reducer'
+import { SignIn } from '../redux/reducer'
 import { verifyIfDataExistsInDatabase } from '../utils/verifyFormData'
 
-export default function SignIn() {
+export default function Login() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const usernameInput = useRef(null)
@@ -39,7 +39,7 @@ export default function SignIn() {
     event.preventDefault()
     const isDataCorrect = verifyIfDataExistsInDatabase(formData)
     if (isDataCorrect.success) {
-      dispatch(logIn(formData))
+      dispatch(SignIn(formData))
       navigate('/profile')
     } else {
       switch (isDataCorrect.errorLocation) {

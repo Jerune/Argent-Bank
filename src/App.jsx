@@ -1,19 +1,19 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
 import Footer from './components/Footer'
-import HeaderNav from './components/HeaderNav'
+import Header from './components/Header'
 import Home from './pages/Home'
-import SignIn from './pages/SignIn'
-import UserAccount from './pages/UserAccount'
+import Login from './pages/Login'
+import Profile from './pages/Profile'
 
 function App() {
   return (
     <>
-      <HeaderNav />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="login" element={<SignIn />} />
-        <Route path="profile" element={<UserAccount />} />
+        <Route path="login" element={<Login />} />
+        <Route path="profile" element={<Profile />} />
       </Routes>
       <Footer />
     </>

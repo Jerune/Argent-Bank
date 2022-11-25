@@ -2,7 +2,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-export default function UserAccount() {
+export default function Profile() {
   const firstName = useSelector((state) => state.firstName)
   const lastName = useSelector((state) => state.lastName)
 

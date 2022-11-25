@@ -3,15 +3,15 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../img/argentBankLogo.png'
-import { logOut } from '../redux/reducer'
+import { SignOut } from '../redux/reducer'
 
-export default function HeaderNav() {
+export default function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const firstName = useSelector((state) => state.firstName)
 
   function SignOutUser() {
-    dispatch(logOut())
+    dispatch(SignOut())
     navigate('/login')
   }
 
