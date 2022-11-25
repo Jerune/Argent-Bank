@@ -4,7 +4,7 @@ export const logIn = ({ email, password }) => ({
   type: 'LOGIN',
   firstName: 'Jack',
   lastName: 'the Ripper',
-  username: email,
+  email: email,
   password: password,
   token: 'token',
 })
@@ -43,7 +43,7 @@ function reducer(state = activeUser, action) {
         isloggedIn: true,
       }
     case 'LOGOUT':
-      return {}
+      return { ...activeUser }
     case 'CHANGE_USER_DATA':
       return {}
     default:

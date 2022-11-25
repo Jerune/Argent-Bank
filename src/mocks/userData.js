@@ -2,13 +2,13 @@ export const USER_DATA = [
   {
     firstName: 'Tony',
     lastName: 'Stark',
-    username: 'tony@stark.com',
+    email: 'tony@stark.com',
     password: 'password123',
   },
   {
     firstName: 'Steve',
     lastName: 'Rogers',
-    username: 'steve@rogers.com',
+    email: 'steve@rogers.com',
     password: 'password456',
   },
 ]

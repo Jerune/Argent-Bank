@@ -3,7 +3,7 @@ import { USER_DATA } from '../mocks/userData'
 
 export function verifyIfDataExistsInDatabase(formData) {
   const currentUserLogin = USER_DATA.filter(
-    (user) => user.username == formData.username,
+    (user) => user.email == formData.email,
   )[0]
 
   if (currentUserLogin !== undefined) {
