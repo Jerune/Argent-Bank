@@ -1,13 +1,18 @@
+// @ts-nocheck
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 export default function UserAccount() {
+  const firstName = useSelector((state) => state.firstName)
+  const lastName = useSelector((state) => state.lastName)
+
   return (
     <main className="main bg-dark">
       <div className="header">
         <h1>
           Welcome back
           <br />
-          Tony Jarvis!
+          {firstName} {lastName}!
         </h1>
         <button className="edit-button">Edit Name</button>
       </div>

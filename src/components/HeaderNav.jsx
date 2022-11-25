@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../img/argentBankLogo.png'
 import { logOut } from '../redux/reducer'
@@ -8,6 +8,7 @@ import { logOut } from '../redux/reducer'
 export default function HeaderNav() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const firstName = useSelector((state) => state.firstName)
 
   function SignOutUser() {
     dispatch(logOut())
@@ -26,7 +27,7 @@ export default function HeaderNav() {
       </a>
       <div>
         <Link className="main-nav-item" to="/profile">
-          <i className="fa fa-user-circle"></i> Jack
+          <i className="fa fa-user-circle"></i> {firstName}
         </Link>
         <Link className="main-nav-item" to="/login">
           <i className="fa fa-user-circle"></i> Sign In
