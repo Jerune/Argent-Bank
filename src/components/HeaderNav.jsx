@@ -1,8 +1,19 @@
 // @ts-nocheck
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../img/argentBankLogo.png'
+import { logOut } from '../redux/reducer'
 
 export default function HeaderNav() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  function SignOutUser() {
+    dispatch(logOut())
+    navigate('/login')
+  }
+
   return (
     <nav className="main-nav">
       <a className="main-nav-logo" href="./index.html">
@@ -14,13 +25,13 @@ export default function HeaderNav() {
         <h1 className="sr-only">Argent Bank</h1>
       </a>
       <div>
-        <a className="main-nav-item" href="./user.html">
-          <i className="fa fa-user-circle"></i> Tony
-        </a>
-        <a className="main-nav-item" href="./sign-in.html">
+        <Link className="main-nav-item" to="/profile">
+          <i className="fa fa-user-circle"></i> Jack
+        </Link>
+        <Link className="main-nav-item" to="/login">
           <i className="fa fa-user-circle"></i> Sign In
-        </a>
-        <a className="main-nav-item" href="./index.html">
+        </Link>
+        <a className="main-nav-item" onClick={SignOutUser}>
           <i className="fa fa-sign-out"></i> Sign Out
         </a>
       </div>
