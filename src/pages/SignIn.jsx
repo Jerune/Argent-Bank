@@ -11,7 +11,7 @@ export default function SignIn() {
   const usernameInput = useRef(null)
   const passwordInput = useRef(null)
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   })
 
@@ -35,11 +35,11 @@ export default function SignIn() {
     })
   }
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault()
-    const isDataCorrect = await verifyIfDataExistsInDatabase(formData)
+    const isDataCorrect = verifyIfDataExistsInDatabase(formData)
     if (isDataCorrect.success) {
-      await dispatch(logIn(formData))
+      dispatch(logIn(formData))
       navigate('/profile')
     } else {
       switch (isDataCorrect.errorLocation) {
@@ -55,7 +55,7 @@ export default function SignIn() {
           null
       }
       setFormData({
-        username: '',
+        email: '',
         password: '',
       })
     }
@@ -68,15 +68,15 @@ export default function SignIn() {
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Username</label>
             <input
               type="email"
-              id="username"
-              name="username"
+              id="email"
+              name="email"
               ref={usernameInput}
               placeholder=""
               onChange={handleChange}
-              value={formData.username}
+              value={formData.email}
             />
           </div>
           <div className="input-wrapper">

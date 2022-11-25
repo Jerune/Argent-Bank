@@ -1,8 +1,8 @@
 // Actions
 
-export const logIn = ({ username, password }) => ({
+export const logIn = ({ email, password }) => ({
   type: 'LOGIN',
-  username: username,
+  username: email,
   password: password,
 })
 
@@ -20,7 +20,9 @@ export const changeUserData = (data) => {
 const activeUser = {
   firstName: '',
   lastName: '',
-  id: null,
+  email: '',
+  password: '',
+  token: '',
   isLoggedIn: false,
 }
 
