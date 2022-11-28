@@ -56,8 +56,10 @@ export default function Login() {
   function handleLocalStorage() {
     if (rememberCheckbox.current.checked) {
       localStorage.setItem('email', formData.email)
-    } else if (localStorage.getItem('email')) {
-      localStorage.removeItem('email')
+    } else {
+      if (emailInLocalStorage) {
+        localStorage.clear()
+      }
     }
   }
 
