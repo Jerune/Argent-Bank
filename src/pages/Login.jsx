@@ -10,15 +10,28 @@ export default function Login() {
   const navigate = useNavigate()
   const usernameInput = useRef(null)
   const passwordInput = useRef(null)
+  const rememberCheckbox = useRef(null)
   const userIsLoggedIn = useSelector((state) => state.isloggedIn)
+  const emailInLocalStorage = localStorage.getItem('email')
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
 
   useEffect(() => {
-    if (userIsLoggedIn) navigate('/profile')
+    if (userIsLoggedIn) {
+      navigate('/profile')
+    }
   }, [userIsLoggedIn])
+
+  useEffect(() => {
+    if (emailInLocalStorage) {
+      setFormData({
+        email: emailInLocalStorage,
+        password: '',
+      })
+    }
+  }, [])
 
   function resetErrorState() {
     if (usernameInput.current.classList.contains('error')) {
@@ -40,11 +53,24 @@ export default function Login() {
     })
   }
 
+  function handleLocalStorage() {
+    if (rememberCheckbox.current.checked) {
+      localStorage.setItem('email', formData.email)
+    } else if (localStorage.getItem('email')) {
+      localStorage.removeItem('email')
+    }
+  }
+
   function handleSubmit(event) {
     event.preventDefault()
     const isDataCorrect = verifyIfDataExistsInDatabase(formData)
     if (isDataCorrect.success) {
+      handleLocalStorage()
       dispatch(SignIn(formData))
+      setFormData({
+        email: '',
+        password: '',
+      })
       navigate('/profile')
     } else {
       switch (isDataCorrect.errorLocation) {
@@ -97,7 +123,7 @@ export default function Login() {
             />
           </div>
           <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
+            <input type="checkbox" ref={rememberCheckbox} id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
           <button className="sign-in-button">Sign In</button>
