@@ -36,7 +36,7 @@ export default function Login() {
   function resetErrorState() {
     if (usernameInput.current.classList.contains('error')) {
       usernameInput.current.classList.remove('error')
-      passwordInput.current.placeholder = ''
+      usernameInput.current.placeholder = ''
     } else if (passwordInput.current.classList.contains('error')) {
       passwordInput.current.classList.remove('error')
       passwordInput.current.placeholder = ''
