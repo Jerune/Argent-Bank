@@ -9,7 +9,7 @@ export default function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const firstName = useSelector((state) => state.user.firstName)
-  const userIsLoggedIn = useSelector((state) => state.user.isloggedIn)
+  const userIsLoggedIn = useSelector((state) => state.user.isLoggedIn)
 
   function SignOutUser() {
     dispatch(signOut())
