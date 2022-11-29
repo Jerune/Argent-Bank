@@ -1,16 +1,29 @@
 // @ts-nocheck
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector, useStore } from 'react-redux'
+import { useGetProfileMutation } from '../hooks/useAPI'
 import { changeUserData } from '../redux/reducer'
 
 export default function Profile() {
   const dispatch = useDispatch()
-
-  const firstName = useSelector((state) => state.firstName)
-  const lastName = useSelector((state) => state.lastName)
-
+  const store = useStore()
+  const firstName = useSelector((state) => state.user.firstName)
+  const lastName = useSelector((state) => state.user.lastName)
+  const [getUserData, userGetResult] = useGetProfileMutation()
   const [formData, setFormData] = useState({ firstName, lastName })
   const [isEditingDetails, setIsEditingDetails] = useState(false)
+
+  useEffect(() => {
+    if (!isEditingDetails) {
+      async function getFirstAndLastName() {
+        const { data, error } = await getUserData()
+        if (data && data.status === 200) {
+          dispatch(changeUserData({ ...data.body }))
+        }
+      }
+      getFirstAndLastName()
+    }
+  }, [isEditingDetails])
 
   function handleChange(event) {
     setFormData((prevFormData) => {

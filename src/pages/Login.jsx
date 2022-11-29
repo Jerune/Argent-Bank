@@ -60,10 +60,8 @@ export default function Login() {
   async function handleSubmit(event) {
     event.preventDefault()
     const { data, error } = await loginUser(formData)
-    console.log(data, error)
 
     if (data && data.status === 200) {
-      console.log(data.body)
       handleLocalStorage()
       dispatch(signIn({ ...formData, ...data.body }))
       setFormData({

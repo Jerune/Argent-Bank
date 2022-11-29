@@ -12,23 +12,6 @@ const activeUser = {
   isLoggedIn: false,
 }
 
-// Actions
-
-export const SignIn = ({ token }) => ({
-  type: 'signIn',
-  token,
-})
-
-// export const SignOut = () => ({ type: 'SIGN_OUT' })
-
-// export const changeUserData = ({ firstName, lastName }) => {
-//   return {
-//     type: 'CHANGE_USER_DATA',
-//     firstName: firstName,
-//     lastName: lastName,
-//   }
-// }
-
 // Reducer
 
 export const userSlice = createSlice({
@@ -48,8 +31,8 @@ export const userSlice = createSlice({
     signOut: () => {
       return { ...activeUser }
     },
-    changeUserData: (state, data) => {
-      const { firstName, lastName } = data
+    changeUserData: (state, action) => {
+      const { firstName, lastName } = action.payload
       return {
         ...state,
         firstName: firstName,
