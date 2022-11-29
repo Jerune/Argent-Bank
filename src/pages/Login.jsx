@@ -20,6 +20,12 @@ export default function Login() {
   })
 
   useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/profile')
+    }
+  }, [isLoggedIn])
+
+  useEffect(() => {
     if (emailInLocalStorage) {
       setFormData({
         email: emailInLocalStorage,
@@ -89,10 +95,6 @@ export default function Login() {
         password: '',
       })
     }
-  }
-
-  if (isLoggedIn) {
-    navigate('/profile')
   }
 
   return (

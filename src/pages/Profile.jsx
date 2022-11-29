@@ -17,7 +17,13 @@ export default function Profile() {
   const [isEditingDetails, setIsEditingDetails] = useState(false)
 
   useEffect(() => {
-    if (!isEditingDetails) {
+    if (!isLoggedIn) {
+      navigate('/login')
+    }
+  }, [isLoggedIn])
+
+  useEffect(() => {
+    if (!isEditingDetails && isLoggedIn) {
       async function getFirstAndLastName() {
         const { data, error } = await getUserData()
         if (data && data.status === 200) {
@@ -54,10 +60,6 @@ export default function Profile() {
     } else {
       console.log(error.data.message)
     }
-  }
-
-  if (!isLoggedIn) {
-    navigate('/login')
   }
 
   return (
