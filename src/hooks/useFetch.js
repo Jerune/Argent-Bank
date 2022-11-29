@@ -5,7 +5,7 @@ export function useFetch(path, type, data) {
   const [returnData, setReturnData] = useState({})
   const [isLoading, setLoading] = useState(true)
 
-  const baseURL = 'localhost:3001/api/v1'
+  const baseURL = 'http://localhost:3001/api/v1'
   const fetchURL = `${baseURL}${path}`
 
   const setFetchDataByType = () => {
@@ -45,11 +45,14 @@ export function useFetch(path, type, data) {
   }
 
   useEffect(() => {
-    if (!fetchURL) return console.log('Incorrect Fetch Request')
+    if (!fetchURL) return console.log('Incorrect Fetch URL')
     async function fetchData() {
       const fetchContent = setFetchDataByType()
+      console.log('Fetch URL', fetchURL)
+      console.log('Fetch Content', fetchContent)
       const response = await fetch(fetchURL, fetchContent)
       const data = await response.json()
+      console.log(data)
       setReturnData(data)
       setLoading(false)
     }

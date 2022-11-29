@@ -1,9 +1,9 @@
 // @ts-nocheck
 import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { SignIn } from '../redux/reducer'
-import { verifyIfDataExistsInDatabase } from '../utils/verifyFormData'
+import { useLoginUserMutation } from '../hooks/useAPI'
+import { signIn } from '../redux/reducer'
 
 export default function Login() {
   const dispatch = useDispatch()
@@ -11,18 +11,12 @@ export default function Login() {
   const usernameInput = useRef(null)
   const passwordInput = useRef(null)
   const rememberCheckbox = useRef(null)
-  const userIsLoggedIn = useSelector((state) => state.isloggedIn)
   const emailInLocalStorage = localStorage.getItem('email')
+  const [loginUser, result] = useLoginUserMutation()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
-
-  useEffect(() => {
-    if (userIsLoggedIn) {
-      navigate('/profile')
-    }
-  }, [userIsLoggedIn])
 
   useEffect(() => {
     if (emailInLocalStorage) {
@@ -63,30 +57,32 @@ export default function Login() {
     }
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    const isDataCorrect = verifyIfDataExistsInDatabase(formData)
-    if (isDataCorrect.success) {
+    const { data } = await loginUser(formData)
+    console.log(data)
+    const isDataCorrect = data.status === 200
+    if (isDataCorrect) {
       handleLocalStorage()
-      dispatch(SignIn(formData))
+      dispatch(signIn(data.body))
       setFormData({
         email: '',
         password: '',
       })
       navigate('/profile')
     } else {
-      switch (isDataCorrect.errorLocation) {
-        case 'usernameInput':
-          usernameInput.current.classList.add('error')
-          usernameInput.current.placeholder = isDataCorrect.error
-          break
-        case 'passwordInput':
-          passwordInput.current.classList.add('error')
-          passwordInput.current.placeholder = isDataCorrect.error
-          break
-        default:
-          null
-      }
+      // switch (isDataCorrect.errorLocation) {
+      //   case 'usernameInput':
+      //     usernameInput.current.classList.add('error')
+      //     usernameInput.current.placeholder = isDataCorrect.error
+      //     break
+      //   case 'passwordInput':
+      //     passwordInput.current.classList.add('error')
+      //     passwordInput.current.placeholder = isDataCorrect.error
+      //     break
+      //   default:
+      //     null
+      // }
       setFormData({
         email: '',
         password: '',

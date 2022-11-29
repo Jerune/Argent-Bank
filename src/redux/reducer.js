@@ -1,23 +1,5 @@
-// Actions
-
-export const SignIn = ({ email, password }) => ({
-  type: 'SIGN_IN',
-  firstName: 'Jack',
-  lastName: 'the Ripper',
-  email: email,
-  password: password,
-  token: 'token',
-})
-
-export const SignOut = () => ({ type: 'SIGN_OUT' })
-
-export const changeUserData = ({ firstName, lastName }) => {
-  return {
-    type: 'CHANGE_USER_DATA',
-    firstName: firstName,
-    lastName: lastName,
-  }
-}
+// @ts-nocheck
+import { createSlice } from '@reduxjs/toolkit'
 
 // Initial State
 
@@ -32,28 +14,32 @@ const activeUser = {
 
 // Reducer
 
-function reducer(state = activeUser, action) {
-  switch (action.type) {
-    case 'SIGN_IN':
-      return {
-        firstName: action.firstName,
-        lastName: action.lastName,
-        email: action.email,
-        password: action.password,
-        token: action.token,
-        isloggedIn: true,
-      }
-    case 'SIGN_OUT':
-      return { ...activeUser }
-    case 'CHANGE_USER_DATA':
+export const userSlice = createSlice({
+  name: 'user',
+  initialState: activeUser,
+  reducers: {
+    signIn: (state, { token }) => {
       return {
         ...state,
-        firstName: action.firstName,
-        lastName: action.lastName,
+        token: token,
+        isLoggedIn: true,
       }
-    default:
+    },
+    signOut: () => {
+      return { ...activeUser }
+    },
+    changeUserData: (state, { firstName, lastName }) => {
+      return {
+        ...state,
+        firstName: firstName,
+        lastName: lastName,
+      }
+    },
+    default: (state) => {
       return state
-  }
-}
+    },
+  },
+})
 
-export default reducer
+export const { signIn, signOut, changeUserData } = userSlice.actions
+export default userSlice.reducer
