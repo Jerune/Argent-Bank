@@ -59,10 +59,10 @@ export default function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault()
-    const { data } = await loginUser(formData)
-    console.log(data)
-    const isDataCorrect = data.status === 200
-    if (isDataCorrect) {
+    const { data, error } = await loginUser(formData)
+    console.log(data, error)
+
+    if (data && data.status === 200) {
       handleLocalStorage()
       dispatch(signIn(data.body))
       setFormData({
@@ -70,19 +70,20 @@ export default function Login() {
         password: '',
       })
       navigate('/profile')
-    } else {
-      // switch (isDataCorrect.errorLocation) {
-      //   case 'usernameInput':
-      //     usernameInput.current.classList.add('error')
-      //     usernameInput.current.placeholder = isDataCorrect.error
-      //     break
-      //   case 'passwordInput':
-      //     passwordInput.current.classList.add('error')
-      //     passwordInput.current.placeholder = isDataCorrect.error
-      //     break
-      //   default:
-      //     null
-      // }
+    } else if (error.status === 400) {
+      const errorMessage = error.data.message
+      switch (errorMessage) {
+        case 'Error: User not found!':
+          usernameInput.current.classList.add('error')
+          usernameInput.current.placeholder = errorMessage
+          break
+        case 'Error: Password is invalid':
+          passwordInput.current.classList.add('error')
+          passwordInput.current.placeholder = errorMessage
+          break
+        default:
+          null
+      }
       setFormData({
         email: '',
         password: '',

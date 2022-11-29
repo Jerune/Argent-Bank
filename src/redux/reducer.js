@@ -14,10 +14,10 @@ const activeUser = {
 
 // Actions
 
-// export const SignIn = ({ token }) => ({
-//   type: 'SIGN_IN',
-//   token,
-// })
+export const SignIn = ({ token }) => ({
+  type: 'signIn',
+  token,
+})
 
 // export const SignOut = () => ({ type: 'SIGN_OUT' })
 
