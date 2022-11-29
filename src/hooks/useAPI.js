@@ -33,10 +33,10 @@ export const useAPI = createApi({
       }),
     }),
     setProfile: builder.mutation({
-      query: ({ data }) => ({
-        url: `user/login`,
+      query: ({ firstName, lastName }) => ({
+        url: `user/profile`,
         method: 'PUT',
-        body: { firstName: data.firstName, lastName: data.lastName },
+        body: { firstName, lastName },
       }),
     }),
   }),

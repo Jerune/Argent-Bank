@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
-import { useGetProfileMutation } from '../hooks/useAPI'
+import { useGetProfileMutation, useSetProfileMutation } from '../hooks/useAPI'
 import { changeUserData } from '../redux/reducer'
 
 export default function Profile() {
@@ -10,6 +10,7 @@ export default function Profile() {
   const firstName = useSelector((state) => state.user.firstName)
   const lastName = useSelector((state) => state.user.lastName)
   const [getUserData, userGetResult] = useGetProfileMutation()
+  const [setUserData, userSetResult] = useSetProfileMutation()
   const [formData, setFormData] = useState({ firstName, lastName })
   const [isEditingDetails, setIsEditingDetails] = useState(false)
 
@@ -43,8 +44,14 @@ export default function Profile() {
 
   async function handleSubmit(event) {
     event.preventDefault()
-    await dispatch(changeUserData(formData))
-    toggleIsEditingDetails()
+    const { data, error } = await setUserData({ ...formData })
+
+    if (data && data.status === 200) {
+      dispatch(changeUserData(data.body))
+      toggleIsEditingDetails()
+    } else {
+      console.log(error.data.message)
+    }
   }
 
   return (
@@ -53,7 +60,10 @@ export default function Profile() {
         <h1>
           Welcome back
           <br />
-          {!isEditingDetails && `${firstName} ${lastName}!`}
+          {!isEditingDetails &&
+            firstName &&
+            lastName &&
+            `${firstName} ${lastName}!`}
         </h1>
         {!isEditingDetails ? (
           <button className="profile-button" onClick={toggleIsEditingDetails}>
