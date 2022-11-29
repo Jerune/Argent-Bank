@@ -35,10 +35,12 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: activeUser,
   reducers: {
-    signIn: (state, data) => {
-      const { token } = data
+    signIn: (state, action) => {
+      const { email, password, token } = action.payload
       return {
         ...state,
+        email: email,
+        password: password,
         token: token,
         isLoggedIn: true,
       }

@@ -63,8 +63,9 @@ export default function Login() {
     console.log(data, error)
 
     if (data && data.status === 200) {
+      console.log(data.body)
       handleLocalStorage()
-      dispatch(signIn(data.body))
+      dispatch(signIn({ ...formData, ...data.body }))
       setFormData({
         email: '',
         password: '',
