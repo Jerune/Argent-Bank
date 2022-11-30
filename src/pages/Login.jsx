@@ -1,12 +1,13 @@
 // @ts-nocheck
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useLoginUserMutation } from '../hooks/useAPI'
 import { signIn } from '../redux/reducer'
 
 export default function Login() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const usernameInput = useRef(null)
   const passwordInput = useRef(null)
   const rememberCheckbox = useRef(null)
@@ -60,7 +61,7 @@ export default function Login() {
   async function handleSubmit(event) {
     event.preventDefault()
     const { data, error } = await loginUser(formData)
-
+    console.log(data, error)
     if (data && data.status === 200) {
       handleLocalStorage()
       dispatch(signIn({ ...formData, ...data.body }))
