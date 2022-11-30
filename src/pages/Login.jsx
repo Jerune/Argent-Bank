@@ -60,8 +60,9 @@ export default function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault()
+    // Use line below instead to test with mocked user data
+    // const { data, error } = await verifyIfMockedDataExistsInDatabase(formData)
     const { data, error } = await loginUser(formData)
-    console.log(data, error)
     if (data && data.status === 200) {
       handleLocalStorage()
       dispatch(signIn({ ...formData, ...data.body }))

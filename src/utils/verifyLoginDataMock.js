@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { USER_DATA } from '../mocks/userData'
 
-export function verifyIfDataExistsInDatabase(formData) {
+export function verifyIfMockedDataExistsInDatabase(formData) {
   const currentUserLogin = USER_DATA.filter(
     (user) => user.email == formData.email,
   )[0]
