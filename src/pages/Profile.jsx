@@ -1,13 +1,12 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { Navigate } from 'react-router-dom'
 import { useGetProfileMutation, useSetProfileMutation } from '../hooks/useAPI'
 import { changeUserData } from '../redux/reducer'
 
 export default function Profile() {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const firstName = useSelector((state) => state.user.firstName)
   const lastName = useSelector((state) => state.user.lastName)
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
@@ -15,12 +14,6 @@ export default function Profile() {
   const [setUserData, userSetResult] = useSetProfileMutation()
   const [formData, setFormData] = useState({ firstName, lastName })
   const [isEditingDetails, setIsEditingDetails] = useState(false)
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login')
-    }
-  }, [isLoggedIn])
 
   useEffect(() => {
     if (!isEditingDetails && isLoggedIn) {
@@ -60,6 +53,10 @@ export default function Profile() {
     } else {
       console.log(error.data.message)
     }
+  }
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />
   }
 
   return (

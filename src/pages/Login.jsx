@@ -1,13 +1,12 @@
 // @ts-nocheck
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { Navigate } from 'react-router-dom'
 import { useLoginUserMutation } from '../hooks/useAPI'
 import { signIn } from '../redux/reducer'
 
 export default function Login() {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const usernameInput = useRef(null)
   const passwordInput = useRef(null)
   const rememberCheckbox = useRef(null)
@@ -18,12 +17,6 @@ export default function Login() {
     email: '',
     password: '',
   })
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/profile')
-    }
-  }, [isLoggedIn])
 
   useEffect(() => {
     if (emailInLocalStorage) {
@@ -95,6 +88,10 @@ export default function Login() {
         password: '',
       })
     }
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to="/profile" />
   }
 
   return (
