@@ -150,7 +150,7 @@ paths:
           description: Invalid Token or User ID
         '500':
           description: Internal Server Error
-  /transactions:
+  /transactions/{accountId}:
     get:
       security:
         - Bearer: []
@@ -164,12 +164,11 @@ paths:
           description: Attach Bearer JWT token
           type: string
           required: true
-        - in: body
-          name: body
-          description: Request transactions for certain bank account
+        - name: accountId
+          in: path
+          type: number
+          description: ID of bankaccount
           required: true
-          schema:
-            $ref: '#/definitions/Transactions'
       produces:
         - application/json
       responses:
@@ -181,7 +180,7 @@ paths:
           description: Invalid Token or Account ID
         '500':
           description: Internal Server Error
-  /transactions/{transactionId}:
+  /transactions/{accountId}/{transactionId}:
     get:
       security:
         - Bearer: []
@@ -195,6 +194,11 @@ paths:
           description: Attach Bearer JWT token
           type: string
           required: true
+        - name: accountId
+          in: path
+          type: number
+          description: ID of bankaccount
+          required: true
         - name: transactionId
           in: path
           type: number
@@ -206,7 +210,7 @@ paths:
           schema:
             $ref: '#/definitions/TransactionResponse'
         '400':
-          description: Invalid Token or Transaction ID
+          description: Invalid token, account ID or transaction ID
         '500':
           description: Internal Server Error
     post:
@@ -215,12 +219,17 @@ paths:
       tags:
         - Transactions
       summary: Transactions API
-      description: Adds Notes to a transaction
+      description: Adds Notes and/or category to a transaction
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           type: string
+          required: true
+        - name: accountId
+          in: path
+          type: number
+          description: ID of bankaccount
           required: true
         - name: transactionId
           in: path
@@ -229,15 +238,15 @@ paths:
           required: true
         - in: body
           name: body
-          description: Provides notes value
+          description: Provide new data value(s)
           required: true
           schema:
-            $ref: '#/definitions/TransactionNote'
+            $ref: '#/definitions/Transaction'
       produces:
         - application/json
       responses:
         '200':
-          description: New notes created successfully
+          description: New data created successfully
           schema:
             $ref: '#/definitions/TransactionResponse'
         '400':
@@ -256,6 +265,11 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           type: string
+          required: true
+        - name: accountId
+          in: path
+          type: number
+          description: ID of bankaccount
           required: true
         - name: transactionId
           in: path
@@ -285,12 +299,17 @@ paths:
       tags:
         - Transactions
       summary: Transactions API
-      description: Deletes 'notes' in a transaction
+      description: Deletes 'notes' and 'category' fields in a transaction
       parameters:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
           type: string
+          required: true
+        - name: accountId
+          in: path
+          type: number
+          description: ID of bankaccount
           required: true
         - name: transactionId
           in: path
@@ -301,9 +320,9 @@ paths:
         - application/json
       responses:
         '200':
-          description: Note deleted successfully
+          description: Additional transaction data deleted successfully
         '400':
-          description: Invalid token or transaction ID
+          description: Invalid token, account ID or transaction ID
         '500':
           description: Internal Server Error
 securityDefinitions:
@@ -353,16 +372,6 @@ definitions:
         type: string
       notes:
         type: string
-  TransactionNote:
-    type: object
-    properties:
-      notes:
-        type: string
-  Transactions:
-    type: object
-    properties:
-      accountId:
-        type: number
   UserResponse:
     type: object
     properties:
