@@ -21,6 +21,7 @@ export default function Login() {
 
   useEffect(() => {
     if (emailInLocalStorage) {
+      rememberCheckbox.current.checked = true
       setFormData({
         email: emailInLocalStorage,
         password: '',
